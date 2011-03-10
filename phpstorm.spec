@@ -1,7 +1,7 @@
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
 Version:	2.0
-Release:	0.1
+Release:	0.2
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
@@ -42,24 +42,26 @@ mv bin/webide.png .
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdir},%{_bindir},%{_pixmapsdir},%{_desktopdir}}
-cp -a bin help lib plugins $RPM_BUILD_ROOT%{_appdir}
+cp -a bin help lib license plugins $RPM_BUILD_ROOT%{_appdir}
 cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
+ln -s %{_appdir}/bin/PhpStorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc license/*
+%attr(755,root,root) %{_bindir}/%{name}
 %dir %{_appdir}
 %{_appdir}/help
 %{_appdir}/lib
+%{_appdir}/license
 %{_appdir}/plugins
 %dir %{_appdir}/bin
-%{_appdir}/bin/PhpStorm.sh
 %{_appdir}/bin/PhpStorm.vmoptions
 %{_appdir}/bin/idea.properties
 %{_appdir}/bin/log.xml
+%attr(755,root,root) %{_appdir}/bin/PhpStorm.sh
 %attr(755,root,root) %{_appdir}/bin/fsnotifier
 %attr(755,root,root) %{_appdir}/bin/libbreakgen.so
 %attr(755,root,root) %{_appdir}/bin/libyjpagent.so
