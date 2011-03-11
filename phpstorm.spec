@@ -1,7 +1,7 @@
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
 Version:	2.0
-Release:	0.2
+Release:	0.3
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
@@ -11,6 +11,12 @@ Source1:	%{name}.desktop
 Patch0:		pld.patch
 URL:		http://www.jetbrains.com/phpstorm/
 BuildRequires:	unzip
+Requires:	java-commons-codec >= 1.3
+Requires:	java-commons-collections
+# pld version is 2.1
+#Requires:	java-commons-lang >= 2.4
+Requires:	java-jgoodies-forms
+Requires:	java-log4j
 Requires:	jdk >= 1.6
 Requires:	which
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -42,6 +48,16 @@ mv -f bin/libyjpagent{64,}.so
 %patch0 -p1
 chmod a+rx bin/*.so bin/fsnotifier
 mv bin/webide.png .
+
+%build
+# replace with system jars
+ln -snf %{_javadir}/commons-codec-1.3.jar lib
+ln -snf %{_javadir}/commons-collections.jar lib/commons-collections.jar
+ln -snf %{_javadir}/jgoodies-forms.jar lib/jgoodies-forms.jar
+ln -snf %{_javadir}/log4j.jar lib/log4j.jar
+# these break:
+#ln -snf %{_javadir}/jdom.jar lib/jdom.jar
+#ln -snf %{_javadir}/xercesImpl.jar lib/xerces.jar
 
 %install
 rm -rf $RPM_BUILD_ROOT
