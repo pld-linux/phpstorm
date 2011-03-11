@@ -1,5 +1,5 @@
---- PhpStorm-103.99/bin/PhpStorm.sh~	2011-02-14 11:51:19.000000000 +0200
-+++ PhpStorm-103.99/bin/PhpStorm.sh	2011-03-11 07:22:06.119840468 +0200
+--- PhpStorm-103.99/bin/PhpStorm.sh	2011-03-11 07:22:06.119840468 +0200
++++ PhpStorm-103.99/bin/PhpStorm.sh	2011-03-11 07:48:34.858272711 +0200
 @@ -27,19 +27,14 @@
    if [ -z "$WEBIDE_JDK" ]; then
      echo ERROR: cannot start WebIde.
@@ -36,7 +36,7 @@
  fi
  
  #--------------------------------------------------------------------------
-@@ -88,7 +75,7 @@
+@@ -88,12 +75,13 @@
  
  # PROFILE
  if [ "false" = "true" ]; then
@@ -45,3 +45,30 @@
  fi
  
  REQUIRED_JVM_ARGS="-Xbootclasspath/a:../lib/boot.jar -Didea.no.jre.check=true $AGENT $WEBIDE_PROPERTIES_PROPERTY $REQUIRED_JVM_ARGS"
+-JVM_ARGS=`tr '\n' ' ' < "$WEBIDE_VM_OPTIONS"`
+-JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS"
++JVM_ARGS=$(tr '\n' ' ' < "$WEBIDE_VM_OPTIONS")
++WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde10"
++JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS -Dwebide.config.home=$WEBIDE_CONFIG_HOME"
+ 
+ CLASSPATH=../lib/bootstrap.jar
+ CLASSPATH=$CLASSPATH:../lib/util.jar
+--- PhpStorm-103.99/bin/idea.properties~	2011-02-14 11:44:54.000000000 +0200
++++ PhpStorm-103.99/bin/idea.properties	2011-03-11 07:48:34.638262763 +0200
+@@ -10,13 +10,13 @@
+ # Note for Windows users: please make sure you're using forward slashes. I.e. c:/idea/system
+ 
+ # path to IDEA config folder. Make sure you're using forward slashes
+-idea.config.path=${user.home}/.WebIde10/config
++idea.config.path=${webide.config.home}/config
+ 
+ # path to IDEA system folder. Make sure you're using forward slashes
+-idea.system.path=${user.home}/.WebIde10/system
++idea.system.path=${webide.config.home}/system
+ 
+ # path to user installed plugins folder. Make sure you're using forward slashes
+-idea.plugins.path=${user.home}/.WebIde10/config/plugins
++idea.plugins.path=${webide.config.home}/config/plugins
+ 
+ #---------------------------------------------------------------------
+ # Maximum file size (kilobytes) IDEA should provide code assistance for.
