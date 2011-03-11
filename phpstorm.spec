@@ -7,6 +7,7 @@ Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
 # NoSource0-md5:	a772dcf0c01231e814817309faf327a3
 NoSource:	0
+Source1:	%{name}.desktop
 Patch0:		pld.patch
 URL:		http://www.jetbrains.com/phpstorm/
 BuildRequires:	unzip
@@ -45,8 +46,10 @@ mv bin/webide.png .
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdir},%{_bindir},%{_pixmapsdir},%{_desktopdir}}
-cp -a bin help lib license plugins $RPM_BUILD_ROOT%{_appdir}
+cp -l build.txt $RPM_BUILD_ROOT/cp-test && l=l && rm -f $RPM_BUILD_ROOT/cp-test
 cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
+cp -a$l bin help lib license plugins $RPM_BUILD_ROOT%{_appdir}
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 ln -s %{_appdir}/bin/PhpStorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
 
 %clean
@@ -68,4 +71,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_appdir}/bin/fsnotifier
 %attr(755,root,root) %{_appdir}/bin/libbreakgen.so
 %attr(755,root,root) %{_appdir}/bin/libyjpagent.so
+%{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.png
