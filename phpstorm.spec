@@ -7,9 +7,11 @@ Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
 # NoSource0-md5:	a772dcf0c01231e814817309faf327a3
 NoSource:	0
+Patch0:		pld.patch
 URL:		http://www.jetbrains.com/phpstorm/
 BuildRequires:	unzip
 Requires:	jdk >= 1.6
+Requires:	which
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdir		%{_libdir}/%{name}
@@ -36,6 +38,7 @@ mv -f bin/fsnotifier{64,}
 mv -f bin/libbreakgen{64,}.so
 mv -f bin/libyjpagent{64,}.so
 %endif
+%patch0 -p1
 chmod a+rx bin/*.so bin/fsnotifier
 mv bin/webide.png .
 

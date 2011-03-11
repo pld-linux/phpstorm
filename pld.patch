@@ -1,0 +1,47 @@
+--- PhpStorm-103.99/bin/PhpStorm.sh~	2011-02-14 11:51:19.000000000 +0200
++++ PhpStorm-103.99/bin/PhpStorm.sh	2011-03-11 07:22:06.119840468 +0200
+@@ -27,19 +27,14 @@
+   if [ -z "$WEBIDE_JDK" ]; then
+     echo ERROR: cannot start WebIde.
+     echo No JDK found to run WebIde. Please validate either WEBIDE_JDK, JDK_HOME or JAVA_HOME points to valid JDK installation.
+-    echo
+-    echo Press Enter to continue.
+-    read IGNORE
+     exit 1
+   fi
+ fi
+ 
+-VERSION_LOG='/tmp/java.version.log'
++VERSION_LOG=$(mktemp java.version.XXXXXX 2>/dev/null || echo ${TMPDIR:-/tmp}/java.version.$$$RAND.log)
+ $WEBIDE_JDK/bin/java -version 2> $VERSION_LOG
+ grep 'OpenJDK' $VERSION_LOG
+ OPEN_JDK=$?
+-grep '64-Bit' $VERSION_LOG
+-BITS=$?
+ rm $VERSION_LOG
+ if [ $OPEN_JDK -eq 0 ]; then
+   echo WARNING: You are launching IDE using OpenJDK Java runtime
+@@ -48,14 +43,6 @@
+   echo
+   echo NOTE:    If you have both Sun JDK and OpenJDK installed
+   echo          please validate either WEBIDE_JDK or JDK_HOME points to valid Sun JDK installation
+-  echo
+-  echo Press Enter to continue.
+-  read IGNORE
+-fi
+-if [ $BITS -eq 0 ]; then
+-  BITS="64"
+-else
+-  BITS=""
+ fi
+ 
+ #--------------------------------------------------------------------------
+@@ -88,7 +75,7 @@
+ 
+ # PROFILE
+ if [ "false" = "true" ]; then
+- AGENT="-agentlib:yjpagent$BITS=disablej2ee,sessionname=webide"
++ AGENT="-agentlib:yjpagent=disablej2ee,sessionname=webide"
+ fi
+ 
+ REQUIRED_JVM_ARGS="-Xbootclasspath/a:../lib/boot.jar -Didea.no.jre.check=true $AGENT $WEBIDE_PROPERTIES_PROPERTY $REQUIRED_JVM_ARGS"
