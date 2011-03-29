@@ -19,6 +19,9 @@ Requires:	java-jgoodies-forms
 Requires:	java-log4j
 Requires:	jdk >= 1.6
 Requires:	which
+Suggests:	cvs
+Suggests:	git-core
+Suggests:	subversion
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdir		%{_libdir}/%{name}
