@@ -1,9 +1,9 @@
---- PhpStorm-103.99/bin/PhpStorm.sh	2011-03-11 07:22:06.119840468 +0200
-+++ PhpStorm-103.99/bin/PhpStorm.sh	2011-03-11 07:48:34.858272711 +0200
+--- PhpStorm-107.120/bin/PhpStorm.sh~	2011-05-19 06:21:07.000000000 +0300
++++ PhpStorm-107.120/bin/PhpStorm.sh	2011-06-01 11:53:18.701430989 +0300
 @@ -27,19 +27,14 @@
    if [ -z "$WEBIDE_JDK" ]; then
      echo ERROR: cannot start WebIde.
-     echo No JDK found to run WebIde. Please validate either WEBIDE_JDK, JDK_HOME or JAVA_HOME points to valid JDK installation.
+     echo No JDK found to run WebIde. Please validate either WEBIDE_JDK, JDK_HOME or JAVA_HOME environment variable points to valid JDK installation.
 -    echo
 -    echo Press Enter to continue.
 -    read IGNORE
@@ -21,10 +21,10 @@
  rm $VERSION_LOG
  if [ $OPEN_JDK -eq 0 ]; then
    echo WARNING: You are launching IDE using OpenJDK Java runtime
-@@ -48,14 +43,6 @@
+@@ -48,15 +43,8 @@
    echo
    echo NOTE:    If you have both Sun JDK and OpenJDK installed
-   echo          please validate either WEBIDE_JDK or JDK_HOME points to valid Sun JDK installation
+   echo          please validate either WEBIDE_JDK or JDK_HOME environment variable points to valid Sun JDK installation
 -  echo
 -  echo Press Enter to continue.
 -  read IGNORE
@@ -34,12 +34,14 @@
 -else
 -  BITS=""
  fi
++BITS=""
  
  #--------------------------------------------------------------------------
-@@ -88,12 +75,13 @@
+ #   Ensure the WEBIDE_HOME var for this script points to the
+@@ -88,12 +76,13 @@
  
  # PROFILE
- if [ "false" = "true" ]; then
+ if [ "utils$_run_closure5@1898c18" = "true" ]; then
 - AGENT="-agentlib:yjpagent$BITS=disablej2ee,sessionname=webide"
 + AGENT="-agentlib:yjpagent=disablej2ee,sessionname=webide"
  fi
@@ -53,6 +55,7 @@
  
  CLASSPATH=../lib/bootstrap.jar
  CLASSPATH=$CLASSPATH:../lib/util.jar
+
 --- PhpStorm-103.99/bin/idea.properties~	2011-02-14 11:44:54.000000000 +0200
 +++ PhpStorm-103.99/bin/idea.properties	2011-03-11 07:48:34.638262763 +0200
 @@ -10,13 +10,13 @@
