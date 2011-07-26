@@ -1,5 +1,5 @@
---- PhpStorm-107.120/bin/PhpStorm.sh~	2011-05-19 06:21:07.000000000 +0300
-+++ PhpStorm-107.120/bin/PhpStorm.sh	2011-06-01 11:53:18.701430989 +0300
+--- PhpStorm-107.425/bin/PhpStorm.sh~	2011-07-19 06:29:11.000000000 +0300
++++ PhpStorm-107.425/bin/PhpStorm.sh	2011-07-26 14:38:29.476956520 +0300
 @@ -27,19 +27,14 @@
    if [ -z "$WEBIDE_JDK" ]; then
      echo ERROR: cannot start WebIde.
@@ -21,7 +21,7 @@
  rm $VERSION_LOG
  if [ $OPEN_JDK -eq 0 ]; then
    echo WARNING: You are launching IDE using OpenJDK Java runtime
-@@ -48,15 +43,8 @@
+@@ -48,14 +43,6 @@
    echo
    echo NOTE:    If you have both Sun JDK and OpenJDK installed
    echo          please validate either WEBIDE_JDK or JDK_HOME environment variable points to valid Sun JDK installation
@@ -34,22 +34,19 @@
 -else
 -  BITS=""
  fi
-+BITS=""
  
  #--------------------------------------------------------------------------
- #   Ensure the WEBIDE_HOME var for this script points to the
-@@ -88,12 +76,13 @@
+@@ -88,12 +75,13 @@
  
  # PROFILE
- if [ "utils$_run_closure5@1898c18" = "true" ]; then
+ if [ "utils$_run_closure5@ffc364" = "true" ]; then
 - AGENT="-agentlib:yjpagent$BITS=disablej2ee,sessionname=webide"
 + AGENT="-agentlib:yjpagent=disablej2ee,sessionname=webide"
  fi
  
  REQUIRED_JVM_ARGS="-Xbootclasspath/a:../lib/boot.jar -Didea.no.jre.check=true $AGENT $WEBIDE_PROPERTIES_PROPERTY $REQUIRED_JVM_ARGS"
--JVM_ARGS=`tr '\n' ' ' < "$WEBIDE_VM_OPTIONS"`
+ JVM_ARGS=`tr '\n' ' ' < "$WEBIDE_VM_OPTIONS"`
 -JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS"
-+JVM_ARGS=$(tr '\n' ' ' < "$WEBIDE_VM_OPTIONS")
 +WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde10"
 +JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS -Dwebide.config.home=$WEBIDE_CONFIG_HOME"
  

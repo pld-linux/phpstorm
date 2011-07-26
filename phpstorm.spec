@@ -1,11 +1,11 @@
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
-Version:	2.1
+Version:	2.1.2
 Release:	1
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
-# NoSource0-md5:	372d8dd9669cc04dc663d582ad6c580f
+# NoSource0-md5:	11cf69ef4304fc4bd548c9a52ef12549
 NoSource:	0
 Source1:	%{name}.desktop
 Patch0:		pld.patch
@@ -37,7 +37,7 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-107.120
+%setup -qn PhpStorm-107.425
 %ifarch %{ix86}
 rm bin/fsnotifier64
 rm bin/libbreakgen64.so
