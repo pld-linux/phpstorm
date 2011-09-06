@@ -1,5 +1,5 @@
---- PhpStorm-107.425/bin/PhpStorm.sh~	2011-07-19 06:29:11.000000000 +0300
-+++ PhpStorm-107.425/bin/PhpStorm.sh	2011-07-26 14:38:29.476956520 +0300
+--- PhpStorm-107.581/bin/PhpStorm.sh~	2011-09-01 18:24:43.000000000 +0300
++++ PhpStorm-107.581/bin/PhpStorm.sh	2011-09-01 18:25:32.747999292 +0300
 @@ -27,19 +27,14 @@
    if [ -z "$WEBIDE_JDK" ]; then
      echo ERROR: cannot start WebIde.
@@ -36,23 +36,15 @@
  fi
  
  #--------------------------------------------------------------------------
-@@ -88,12 +75,13 @@
- 
- # PROFILE
- if [ "utils$_run_closure5@ffc364" = "true" ]; then
-- AGENT="-agentlib:yjpagent$BITS=disablej2ee,sessionname=webide"
-+ AGENT="-agentlib:yjpagent=disablej2ee,sessionname=webide"
- fi
- 
+@@ -81,6 +81,8 @@
  REQUIRED_JVM_ARGS="-Xbootclasspath/a:../lib/boot.jar -Didea.no.jre.check=true $AGENT $WEBIDE_PROPERTIES_PROPERTY $REQUIRED_JVM_ARGS"
  JVM_ARGS=`tr '\n' ' ' < "$WEBIDE_VM_OPTIONS"`
--JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS"
+ JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS"
 +WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde10"
 +JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS -Dwebide.config.home=$WEBIDE_CONFIG_HOME"
  
  CLASSPATH=../lib/bootstrap.jar
  CLASSPATH=$CLASSPATH:../lib/util.jar
-
 --- PhpStorm-103.99/bin/idea.properties~	2011-02-14 11:44:54.000000000 +0200
 +++ PhpStorm-103.99/bin/idea.properties	2011-03-11 07:48:34.638262763 +0200
 @@ -10,13 +10,13 @@
