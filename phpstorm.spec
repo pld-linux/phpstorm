@@ -24,7 +24,9 @@ Suggests:	git-core
 Suggests:	subversion
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_appdir		%{_libdir}/%{name}
+# use /usr/lib, 64bit files are renamed,
+# this allows to install both arch files and to use 32bit jdk on 64bit os
+%define		_appdir		%{_prefix}/lib/%{name}
 
 %description
 PhpStorm is a lightweight and smart PHP IDE focused on developer
@@ -38,18 +40,19 @@ Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
 %setup -qn PhpStorm-111.19
+# keep only single arch files
 %ifarch %{ix86}
 rm bin/fsnotifier64
 rm bin/libbreakgen64.so
 rm bin/libyjpagent64.so
 %endif
 %ifarch %{x8664}
-mv -f bin/fsnotifier{64,}
-mv -f bin/libbreakgen{64,}.so
-mv -f bin/libyjpagent{64,}.so
+rm bin/fsnotifier
+rm bin/libbreakgen.so
+rm bin/libyjpagent.so
 %endif
 %patch0 -p1
-chmod a+rx bin/*.so bin/fsnotifier
+chmod a+rx bin/*.so bin/fsnotifier*
 mv bin/webide.png .
 
 # cleanup backups after patching
@@ -58,10 +61,10 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 %build
 # replace with system jars
 ln -snf %{_javadir}/commons-codec-1.3.jar lib
-ln -snf %{_javadir}/commons-collections.jar lib/commons-collections.jar
 ln -snf %{_javadir}/jgoodies-forms.jar lib/jgoodies-forms.jar
 ln -snf %{_javadir}/log4j.jar lib/log4j.jar
 # these break:
+#ln -snf %{_javadir}/commons-collections.jar lib/commons-collections.jar
 #ln -snf %{_javadir}/jdom.jar lib/jdom.jar
 #ln -snf %{_javadir}/xercesImpl.jar lib/xerces.jar
 
@@ -72,7 +75,7 @@ cp -l build.txt $RPM_BUILD_ROOT/cp-test && l=l && rm -f $RPM_BUILD_ROOT/cp-test
 cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -a$l bin help lib license plugins $RPM_BUILD_ROOT%{_appdir}
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-ln -s %{_appdir}/bin/PhpStorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
+ln -s %{_appdir}/bin/phpstorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -90,8 +93,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/bin/idea.properties
 %{_appdir}/bin/log.xml
 %attr(755,root,root) %{_appdir}/bin/phpstorm.sh
-%attr(755,root,root) %{_appdir}/bin/fsnotifier
-%attr(755,root,root) %{_appdir}/bin/libbreakgen.so
-%attr(755,root,root) %{_appdir}/bin/libyjpagent.so
+%attr(755,root,root) %{_appdir}/bin/fsnotifier*
+%attr(755,root,root) %{_appdir}/bin/libbreakgen*.so
+%attr(755,root,root) %{_appdir}/bin/libyjpagent*.so
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.png
