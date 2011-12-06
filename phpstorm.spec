@@ -1,6 +1,6 @@
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
-Version:	2.1.5
+Version:	3.0
 Release:	1
 License:	?
 Group:		Development/Tools
@@ -37,7 +37,7 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-107.658
+%setup -qn PhpStorm-111.19
 %ifarch %{ix86}
 rm bin/fsnotifier64
 rm bin/libbreakgen64.so
@@ -86,10 +86,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/license
 %{_appdir}/plugins
 %dir %{_appdir}/bin
-%{_appdir}/bin/PhpStorm.vmoptions
+%{_appdir}/bin/phpstorm.vmoptions
 %{_appdir}/bin/idea.properties
 %{_appdir}/bin/log.xml
-%attr(755,root,root) %{_appdir}/bin/PhpStorm.sh
+%attr(755,root,root) %{_appdir}/bin/phpstorm.sh
 %attr(755,root,root) %{_appdir}/bin/fsnotifier
 %attr(755,root,root) %{_appdir}/bin/libbreakgen.so
 %attr(755,root,root) %{_appdir}/bin/libyjpagent.so
