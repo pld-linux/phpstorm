@@ -1,5 +1,5 @@
---- PhpStorm-111.19/bin/phpstorm.sh~	2011-11-28 11:50:46.000000000 +0200
-+++ PhpStorm-111.19/bin/phpstorm.sh	2011-12-06 19:55:51.616124548 +0200
+--- PhpStorm-111.19/bin/phpstorm.sh	2011-12-06 19:55:51.616124548 +0200
++++ PhpStorm-111.19/bin/phpstorm.sh	2011-12-06 21:11:56.432592623 +0200
 @@ -63,9 +63,6 @@
    if [ -z "$JDK" ]; then
      echo "ERROR: cannot start WebIde."
@@ -42,12 +42,16 @@
  fi
  
  # in Mac OS X ./Contents/Info.plist describes all VM options & system properties
-@@ -144,7 +132,8 @@
+@@ -144,7 +132,12 @@
  
  REQUIRED_JVM_ARGS="-Xbootclasspath/a:../lib/boot.jar -Didea.no.jre.check=true -Didea.paths.selector=WebIde10 $IDE_PROPERTIES_PROPERTY $REQUIRED_JVM_ARGS"
  
 -JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS $MAC_VM_OPTIONS $AGENT"
-+WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde"
++WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde10"
++# if old dir does not exist, use new one
++if [ ! -d "$WEBIDE_CONFIG_HOME" ]; then
++	WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde"
++fi
 +JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS -Dwebide.config.home=$WEBIDE_CONFIG_HOME $MAC_VM_OPTIONS $AGENT"
  
  CLASSPATH=../lib/bootstrap.jar
