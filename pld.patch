@@ -47,7 +47,7 @@
  REQUIRED_JVM_ARGS="-Xbootclasspath/a:../lib/boot.jar -Didea.no.jre.check=true -Didea.paths.selector=WebIde10 $IDE_PROPERTIES_PROPERTY $REQUIRED_JVM_ARGS"
  
 -JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS $MAC_VM_OPTIONS $AGENT"
-+WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde10"
++WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde"
 +JVM_ARGS="$JVM_ARGS $REQUIRED_JVM_ARGS -Dwebide.config.home=$WEBIDE_CONFIG_HOME $MAC_VM_OPTIONS $AGENT"
  
  CLASSPATH=../lib/bootstrap.jar
