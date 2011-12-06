@@ -80,6 +80,17 @@ ln -s %{_appdir}/bin/phpstorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+if [ "$1" = 1 ]; then
+	# NOTE: rpm is broken and does not install the symlinks. need to fixup manually.
+	# see the log: http://carme.pld-linux.org/~glen/phpstorm.log
+	# it seems to work on upgrades, so need to do that just once
+	cd %{_appdir}
+	ln -s %{_javadir}/commons-codec-1.3.jar lib
+	ln -s %{_javadir}/jgoodies-forms.jar lib/jgoodies-forms.jar
+	ln -s %{_javadir}/log4j.jar lib/log4j.jar
+fi
+
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}
