@@ -58,16 +58,6 @@ mv bin/webide.png .
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 
-%build
-# replace with system jars
-ln -snf %{_javadir}/commons-codec-1.3.jar lib
-ln -snf %{_javadir}/jgoodies-forms.jar lib/jgoodies-forms.jar
-ln -snf %{_javadir}/log4j.jar lib/log4j.jar
-# these break:
-#ln -snf %{_javadir}/commons-collections.jar lib/commons-collections.jar
-#ln -snf %{_javadir}/jdom.jar lib/jdom.jar
-#ln -snf %{_javadir}/xercesImpl.jar lib/xerces.jar
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdir},%{_bindir},%{_pixmapsdir},%{_desktopdir}}
@@ -77,19 +67,17 @@ cp -a$l bin help lib license plugins $RPM_BUILD_ROOT%{_appdir}
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 ln -s %{_appdir}/bin/phpstorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
 
+# replace with system jars
+ln -snf %{_javadir}/commons-codec-1.3.jar $RPM_BUILD_ROOT%{_appdir}/lib
+ln -snf %{_javadir}/jgoodies-forms.jar $RPM_BUILD_ROOT%{_appdir}/lib/jgoodies-forms.jar
+ln -snf %{_javadir}/log4j.jar $RPM_BUILD_ROOT%{_appdir}/lib/log4j.jar
+# these break:
+#ln -snf %{_javadir}/commons-collections.jar $RPM_BUILD_ROOT%{_appdir}/lib/commons-collections.jar
+#ln -snf %{_javadir}/jdom.jar $RPM_BUILD_ROOT%{_appdir}/lib/jdom.jar
+#ln -snf %{_javadir}/xercesImpl.jar $RPM_BUILD_ROOT%{_appdir}/lib/xerces.jar
+
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%post
-if [ "$1" = 1 ]; then
-	# NOTE: rpm is broken and does not install the symlinks. need to fixup manually.
-	# see the log: http://carme.pld-linux.org/~glen/phpstorm.log
-	# it seems to work on upgrades, so need to do that just once
-	cd %{_appdir}
-	ln -s %{_javadir}/commons-codec-1.3.jar lib
-	ln -s %{_javadir}/jgoodies-forms.jar lib/jgoodies-forms.jar
-	ln -s %{_javadir}/log4j.jar lib/log4j.jar
-fi
 
 %files
 %defattr(644,root,root,755)
