@@ -1,11 +1,11 @@
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
-Version:	3.0.3
-Release:	0.1
+Version:	4.0.1
+Release:	1
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
-# NoSource0-md5:	af1a42bd3a3ba7f20efc55c861870a39
+# NoSource0-md5:	d7913aa7ee7dafb7ef7c232a0eb5ddd3
 NoSource:	0
 Source1:	%{name}.desktop
 Patch0:		pld.patch
@@ -39,17 +39,19 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-111.344
-# keep only single arch files
+%setup -qn PhpStorm-117.257
+
+# keep only single arch files (don't want to pull 32bit deps by default),
+# if you want to mix, install rpm from both arch
 %ifarch %{ix86}
 rm bin/fsnotifier64
-rm bin/libbreakgen64.so
-rm bin/libyjpagent64.so
+rm bin/libyjpagent-linux64.so
+rm bin/phpstorm64.vmoptions
 %endif
 %ifarch %{x8664}
 rm bin/fsnotifier
-rm bin/libbreakgen.so
-rm bin/libyjpagent.so
+rm bin/libyjpagent-linux.so
+rm bin/phpstorm.vmoptions
 %endif
 %patch0 -p1
 chmod a+rx bin/*.so bin/fsnotifier*
@@ -88,12 +90,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/license
 %{_appdir}/plugins
 %dir %{_appdir}/bin
-%{_appdir}/bin/phpstorm.vmoptions
+%{_appdir}/bin/phpstorm*.vmoptions
 %{_appdir}/bin/idea.properties
 %{_appdir}/bin/log.xml
 %attr(755,root,root) %{_appdir}/bin/phpstorm.sh
+%attr(755,root,root) %{_appdir}/bin/inspect.sh
 %attr(755,root,root) %{_appdir}/bin/fsnotifier*
-%attr(755,root,root) %{_appdir}/bin/libbreakgen*.so
-%attr(755,root,root) %{_appdir}/bin/libyjpagent*.so
+%attr(755,root,root) %{_appdir}/bin/libyjpagent-linux*.so
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.png
