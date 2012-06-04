@@ -1,11 +1,11 @@
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
 Version:	4.0.2
-Release:	1
+Release:	2
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
-# NoSource0-md5:	95e93f83dc5cb72a9d327851db00643b
+# NoSource0-md5:	d8005bbaadfbc57c991834ca9e1ee3fc
 NoSource:	0
 Source1:	%{name}.desktop
 Patch0:		pld.patch
@@ -39,7 +39,7 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-117.474
+%setup -qn PhpStorm-117.501
 
 # keep only single arch files (don't want to pull 32bit deps by default),
 # if you want to mix, install rpm from both arch
