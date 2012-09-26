@@ -1,30 +1,21 @@
---- PhpStorm-117.257/bin/phpstorm.sh~	2012-04-22 15:47:51.000000000 +0300
-+++ PhpStorm-117.257/bin/phpstorm.sh	2012-04-26 20:30:01.239110387 +0300
-@@ -37,7 +37,7 @@
-       fi
-     fi
- 
--    if [ -z "$JDK" -a -x "/bin/readlink" ]; then
-+    if [ -z "$JDK" -a -x "/bin/bin/readlink" ]; then
-       JAVA_LOCATION=`readlink -f "$JAVA_BIN_PATH"`
-       case "$JAVA_LOCATION" in
-         */jre/bin/java)
-@@ -132,8 +132,14 @@
+--- PhpStorm-121.215/bin/phpstorm.sh~	2012-09-12 10:45:30.000000000 +0300
++++ PhpStorm-121.215/bin/phpstorm.sh	2012-09-13 11:20:32.457844651 +0300
+@@ -149,8 +149,14 @@
    fi
  fi
  
-+WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde40"
++WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde50"
 +# versioned dir does not exist, use unversioned
 +if [ ! -d "$WEBIDE_CONFIG_HOME" ]; then
 +	WEBIDE_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/WebIde"
 +fi
 +
- COMMON_JVM_ARGS="-Xbootclasspath/a:../lib/boot.jar -Didea.paths.selector=WebIde40 $IDE_PROPERTIES_PROPERTY"
+ COMMON_JVM_ARGS="\"-Xbootclasspath/a:$IDE_HOME/lib/boot.jar\" -Didea.paths.selector=WebIde50 $IDE_PROPERTIES_PROPERTY"
 -IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true"
 +IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true -Dwebide.config.home=$WEBIDE_CONFIG_HOME"
  ALL_JVM_ARGS="$VM_OPTIONS $COMMON_JVM_ARGS $IDE_JVM_ARGS $AGENT $REQUIRED_JVM_ARGS"
  
- CLASSPATH="../lib/bootstrap.jar"
+ CLASSPATH="$IDE_HOME/lib/bootstrap.jar"
 --- PhpStorm-117.257/bin/idea.properties~	2012-04-22 15:43:53.000000000 +0300
 +++ PhpStorm-117.257/bin/idea.properties	2012-04-26 20:31:24.809350768 +0300
 @@ -13,21 +13,25 @@
