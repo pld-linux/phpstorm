@@ -1,11 +1,12 @@
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
-Version:	5.0.1
+Version:	5.0.2
 Release:	1
+# TODO: figure out what's the licensing and redistribution
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
-# NoSource0-md5:	f0442ccc371d5263c5e4456f2448535d
+# NoSource0-md5:	ddb4c35a5ae78a3182510967618562d1
 NoSource:	0
 Source1:	%{name}.desktop
 Patch0:		pld.patch
@@ -24,7 +25,7 @@ Suggests:	git-core
 Suggests:	subversion
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# use /usr/lib, 64bit files are renamed,
+# use /usr/lib, 64bit files do not conflict with 32bit files (64 suffix)
 # this allows to install both arch files and to use 32bit jdk on 64bit os
 %define		_appdir		%{_prefix}/lib/%{name}
 
@@ -39,7 +40,7 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-121.215
+%setup -qn PhpStorm-121.285
 
 # keep only single arch files (don't want to pull 32bit deps by default),
 # if you want to mix, install rpm from both arch
