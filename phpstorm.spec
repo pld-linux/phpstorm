@@ -22,7 +22,7 @@ Requires:	java-commons-collections
 #Requires:	java-commons-lang >= 2.4
 Requires:	java-jgoodies-forms
 Requires:	java-log4j
-Requires:	jdk >= 1.6
+Requires:	jre >= 1.6
 Requires:	which
 Suggests:	cvs
 Suggests:	git-core
