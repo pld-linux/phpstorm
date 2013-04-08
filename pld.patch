@@ -1,5 +1,5 @@
---- PhpStorm-121.215/bin/phpstorm.sh	2012-09-13 11:20:32.457844651 +0300
-+++ PhpStorm-121.390/bin/phpstorm.sh	2012-11-22 12:54:54.000000000 +0200
+--- PhpStorm-127.100/bin/phpstorm.sh~	2013-03-12 11:19:05.000000000 +0200
++++ PhpStorm-127.100/bin/phpstorm.sh	2013-03-13 21:09:15.996677961 +0200
 @@ -149,8 +149,11 @@
    fi
  fi
@@ -7,7 +7,7 @@
 +WEBIDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/PhpStorm"
 +WEBIDE_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/PhpStorm"
 +
- COMMON_JVM_ARGS="\"-Xbootclasspath/a:$IDE_HOME/lib/boot.jar\" -Didea.paths.selector=WebIde50 $IDE_PROPERTIES_PROPERTY"
+ COMMON_JVM_ARGS="\"-Xbootclasspath/a:$IDE_HOME/lib/boot.jar\" -Didea.paths.selector=WebIde60 $IDE_PROPERTIES_PROPERTY"
 -IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true"
 +IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true -Dwebide.config.dir=$WEBIDE_CONFIG_DIR -Dwebide.cache.dir=$WEBIDE_CACHE_DIR"
  ALL_JVM_ARGS="$VM_OPTIONS $COMMON_JVM_ARGS $IDE_JVM_ARGS $AGENT $REQUIRED_JVM_ARGS"
