@@ -1,42 +1,42 @@
---- PhpStorm-127.100/bin/phpstorm.sh~	2013-03-12 11:19:05.000000000 +0200
-+++ PhpStorm-127.100/bin/phpstorm.sh	2013-03-13 21:09:15.996677961 +0200
-@@ -149,8 +149,11 @@
+--- PhpStorm-133.982/bin/phpstorm.sh~	2014-02-25 05:52:36.000000000 +0200
++++ PhpStorm-133.982/bin/phpstorm.sh	2014-03-19 23:55:40.612633775 +0200
+@@ -145,8 +145,11 @@
    fi
  fi
  
 +WEBIDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/PhpStorm"
 +WEBIDE_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/PhpStorm"
 +
- COMMON_JVM_ARGS="\"-Xbootclasspath/a:$IDE_HOME/lib/boot.jar\" -Didea.paths.selector=WebIde60 $IDE_PROPERTIES_PROPERTY"
+ COMMON_JVM_ARGS="\"-Xbootclasspath/a:$IDE_HOME/lib/boot.jar\" -Didea.paths.selector=WebIde70 $IDE_PROPERTIES_PROPERTY"
 -IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true"
 +IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true -Dwebide.config.dir=$WEBIDE_CONFIG_DIR -Dwebide.cache.dir=$WEBIDE_CACHE_DIR"
  ALL_JVM_ARGS="$VM_OPTIONS $COMMON_JVM_ARGS $IDE_JVM_ARGS $AGENT $REQUIRED_JVM_ARGS"
  
  CLASSPATH="$IDE_HOME/lib/bootstrap.jar"
---- PhpStorm-121.390/bin/idea.properties~	2012-10-30 15:40:58.000000000 +0200
-+++ PhpStorm-121.390/bin/idea.properties	2012-11-22 12:54:58.000000000 +0200
-@@ -13,21 +13,25 @@
- # Uncomment this option if you want to customize path to IDE config folder. Make sure you're using forward slashes
+--- PhpStorm-133.982/bin/idea.properties~	2014-02-25 05:43:47.000000000 +0200
++++ PhpStorm-133.982/bin/idea.properties	2014-03-19 23:57:13.956684223 +0200
+@@ -6,21 +6,25 @@
+ # Uncomment this option if you want to customize path to IDE config folder. Make sure you're using forward slashes.
  #---------------------------------------------------------------------
  # idea.config.path=${user.home}/.WebIde/config
 +idea.config.path=${webide.config.dir}
  
  #---------------------------------------------------------------------
- # Uncomment this option if you want to customize path to IDE system folder. Make sure you're using forward slashes
+ # Uncomment this option if you want to customize path to IDE system folder. Make sure you're using forward slashes.
  #---------------------------------------------------------------------
  # idea.system.path=${user.home}/.WebIde/system
 +idea.system.path=${webide.cache.dir}
  
  #---------------------------------------------------------------------
- # Uncomment this option if you want to customize path to user installed plugins folder. Make sure you're using forward slashes
+ # Uncomment this option if you want to customize path to user installed plugins folder. Make sure you're using forward slashes.
  #---------------------------------------------------------------------
- # idea.plugins.path=${user.home}/.WebIde/config/plugins
+ # idea.plugins.path=${idea.config.path}/plugins
 +idea.plugins.path=${webide.config.dir}/plugins
  
  #---------------------------------------------------------------------
  # Uncomment this option if you want to customize path to IDE logs folder. Make sure you're using forward slashes.
  #---------------------------------------------------------------------
- # idea.log.path=${user.home}/.WebIde/system/log
+ # idea.log.path=${idea.system.path}/log
 +idea.log.path=${webide.cache.dir}/log
  
  #---------------------------------------------------------------------

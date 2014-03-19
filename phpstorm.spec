@@ -1,13 +1,13 @@
 %include	/usr/lib/rpm/macros.java
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
-Version:	6.0.3
+Version:	7.1.3
 Release:	1
 # TODO: figure out what's the licensing and redistribution
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
-# NoSource0-md5:	0cd9e43f535052d52c58e695912b9445
+# NoSource0-md5:	5c68dce5fa53ce2ff42fa8a590561c40
 NoSource:	0
 Source1:	%{name}.desktop
 Patch0:		pld.patch
@@ -29,6 +29,11 @@ Suggests:	git-core
 Suggests:	subversion
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# don't strip fsnotifier, it's size is checked for "outdated binary"
+# https://bugs.archlinux.org/task/34703
+# http://git.jetbrains.org/?p=idea/community.git;a=blob;f=platform/platform-impl/src/com/intellij/openapi/vfs/impl/local/FileWatcher.java;h=004311b96a35df1ffc2c87baba78a8b2a8809f7d;hb=376b939fd6d6ec4c12191a5f90503d9d62c501da#l173
+%define		_noautostrip	.*/fsnotifier.*
+
 # use /usr/lib, 64bit files do not conflict with 32bit files (64 suffix)
 # this allows to install both arch files and to use 32bit jdk on 64bit os
 %define		_appdir		%{_prefix}/lib/%{name}
@@ -44,7 +49,7 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-129.814
+%setup -qn PhpStorm-133.982
 
 # keep only single arch files (don't want to pull 32bit deps by default),
 # if you want to mix, install rpm from both arch
