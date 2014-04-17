@@ -10,6 +10,7 @@ Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
 # NoSource0-md5:	5c68dce5fa53ce2ff42fa8a590561c40
 NoSource:	0
 Source1:	%{name}.desktop
+Source2:	%{name}.py
 Patch0:		pld.patch
 URL:		http://www.jetbrains.com/phpstorm/
 BuildRequires:	jpackage-utils
@@ -75,7 +76,7 @@ cp -a$l bin help lib license plugins $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_pixmapsdir}/%{name}.png $RPM_BUILD_ROOT%{_appdir}/bin
 cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-ln -s %{_appdir}/bin/phpstorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
+install -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -89,9 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/plugins
 %dir %{_appdir}/bin
 %{_appdir}/bin/%{name}*.vmoptions
+%{_appdir}/bin/%{name}.png
 %{_appdir}/bin/idea.properties
 %{_appdir}/bin/log.xml
-%{_appdir}/bin/%{name}.png
 %attr(755,root,root) %{_appdir}/bin/%{name}.sh
 %attr(755,root,root) %{_appdir}/bin/inspect.sh
 %attr(755,root,root) %{_appdir}/bin/fsnotifier*
