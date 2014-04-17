@@ -2,8 +2,9 @@
 Version=1.0
 Type=Application
 Terminal=false
-Exec=phpstorm
 Name=PhpStorm
-Comment=Lightweight and Smart PHP IDE
 Icon=phpstorm
+Exec=phpstorm %f
+Comment=Lightweight and Smart PHP IDE
 Categories=Development;IDE;
+StartupWMClass=jetbrains-phpstorm
