@@ -57,12 +57,15 @@ Editor, JavaScript Editor) and adds full-fledged support for PHP.
 rm bin/fsnotifier64
 rm bin/libyjpagent-linux64.so
 rm bin/phpstorm64.vmoptions
+rm -r lib/libpty/linux/x86_64
 %endif
 %ifarch %{x8664}
 rm bin/fsnotifier
 rm bin/libyjpagent-linux.so
 rm bin/phpstorm.vmoptions
+rm -r lib/libpty/linux/x86
 %endif
+rm -r lib/libpty/{macosx,win}
 %patch0 -p1
 chmod a+rx bin/*.so bin/fsnotifier*
 mv bin/webide.png .
@@ -97,17 +100,24 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 %dir %{_appdir}
 %{_appdir}/help
-%{_appdir}/lib
 %{_appdir}/license
 %{_appdir}/plugins
 %dir %{_appdir}/bin
-%{_appdir}/bin/phpstorm*.vmoptions
+%{_appdir}/bin/%{name}*.vmoptions
 %{_appdir}/bin/idea.properties
 %{_appdir}/bin/log.xml
-%attr(755,root,root) %{_appdir}/bin/phpstorm.sh
+%{_appdir}/bin/%{name}.png
+%attr(755,root,root) %{_appdir}/bin/%{name}.sh
 %attr(755,root,root) %{_appdir}/bin/inspect.sh
 %attr(755,root,root) %{_appdir}/bin/fsnotifier*
 %attr(755,root,root) %{_appdir}/bin/libyjpagent-linux*.so
-%{_appdir}/bin/%{name}.png
+%dir %{_appdir}/lib
+%{_appdir}/lib/*.jar
+%dir %{_appdir}/lib/ext
+%{_appdir}/lib/ext/*.jar
+%dir %{_appdir}/lib/libpty
+%dir %{_appdir}/lib/libpty/linux
+%dir %{_appdir}/lib/libpty/linux/x86*
+%attr(755,root,root) %{_appdir}/lib/libpty/linux/x86*/libpty.so
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.png
