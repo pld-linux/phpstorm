@@ -16,12 +16,6 @@ BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
-Requires:	java-commons-codec >= 1.3
-Requires:	java-commons-collections
-# pld version is 2.1
-#Requires:	java-commons-lang >= 2.4
-Requires:	java-jgoodies-forms
-Requires:	java-log4j
 Requires:	jre >= 1.6
 Requires:	which
 Suggests:	cvs
@@ -82,15 +76,6 @@ ln -s %{_pixmapsdir}/%{name}.png $RPM_BUILD_ROOT%{_appdir}/bin
 cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 ln -s %{_appdir}/bin/phpstorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
-
-# replace with system jars
-ln -snf %{_javadir}/commons-codec-1.3.jar $RPM_BUILD_ROOT%{_appdir}/lib
-ln -snf %{_javadir}/jgoodies-forms.jar $RPM_BUILD_ROOT%{_appdir}/lib/jgoodies-forms.jar
-ln -snf %{_javadir}/log4j.jar $RPM_BUILD_ROOT%{_appdir}/lib/log4j.jar
-# these break:
-#ln -snf %{_javadir}/commons-collections.jar $RPM_BUILD_ROOT%{_appdir}/lib/commons-collections.jar
-#ln -snf %{_javadir}/jdom.jar $RPM_BUILD_ROOT%{_appdir}/lib/jdom.jar
-#ln -snf %{_javadir}/xercesImpl.jar $RPM_BUILD_ROOT%{_appdir}/lib/xerces.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
