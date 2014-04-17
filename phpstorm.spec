@@ -74,8 +74,9 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdir},%{_bindir},%{_pixmapsdir},%{_desktopdir}}
 cp -l build.txt $RPM_BUILD_ROOT/cp-test && l=l && rm -f $RPM_BUILD_ROOT/cp-test
-cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -a$l bin help lib license plugins $RPM_BUILD_ROOT%{_appdir}
+ln -s %{_pixmapsdir}/%{name}.png $RPM_BUILD_ROOT%{_appdir}/bin
+cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 ln -s %{_appdir}/bin/phpstorm.sh $RPM_BUILD_ROOT%{_bindir}/phpstorm
 
@@ -107,5 +108,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_appdir}/bin/inspect.sh
 %attr(755,root,root) %{_appdir}/bin/fsnotifier*
 %attr(755,root,root) %{_appdir}/bin/libyjpagent-linux*.so
+%{_appdir}/bin/%{name}.png
 %{_desktopdir}/%{name}.desktop
 %{_pixmapsdir}/%{name}.png
