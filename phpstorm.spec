@@ -21,7 +21,9 @@ Requires:	jre >= 1.6
 Requires:	which
 Suggests:	cvs
 Suggests:	git-core
+Suggests:	java-jdbc-mysql
 Suggests:	subversion
+Conflicts:	java-jdbc-mysql < 5.1.22
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # don't strip fsnotifier, it's size is checked for "outdated binary"
