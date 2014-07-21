@@ -79,6 +79,7 @@ ln -s %{_pixmapsdir}/%{name}.png $RPM_BUILD_ROOT%{_appdir}/bin
 cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 install -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/%{name}
+ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/pstorm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -86,6 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/pstorm
 %dir %{_appdir}
 %{_appdir}/help
 %{_appdir}/license
