@@ -1,18 +1,17 @@
---- PhpStorm-139.732/bin/phpstorm.sh~	2014-12-10 13:42:32.000000000 +0200
-+++ PhpStorm-139.732/bin/phpstorm.sh	2014-12-13 21:00:59.776397175 +0200
-@@ -152,8 +152,11 @@
+--- PhpStorm-141.1912/bin/phpstorm.sh~	2015-07-07 13:24:20.000000000 +0300
++++ PhpStorm-141.1912/bin/phpstorm.sh	2015-07-22 13:30:21.733198210 +0300
+@@ -157,7 +157,10 @@
    fi
  fi
  
+-IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true"
 +WEBIDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/PhpStorm"
 +WEBIDE_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/PhpStorm"
 +
- COMMON_JVM_ARGS="-XX:ErrorFile=$HOME/java_error_in_WEBIDE_%p.log \"-Xbootclasspath/a:$IDE_HOME/lib/boot.jar\" -Didea.paths.selector=WebIde80 $IDE_PROPERTIES_PROPERTY"
--IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true"
 +IDE_JVM_ARGS="-Didea.platform.prefix=PhpStorm -Didea.no.jre.check=true -Dwebide.config.dir=$WEBIDE_CONFIG_DIR -Dwebide.cache.dir=$WEBIDE_CACHE_DIR"
- ALL_JVM_ARGS="$VM_OPTIONS $COMMON_JVM_ARGS $IDE_JVM_ARGS $AGENT $REQUIRED_JVM_ARGS"
  
  CLASSPATH="$IDE_HOME/lib/bootstrap.jar"
+ CLASSPATH="$CLASSPATH:$IDE_HOME/lib/extensions.jar"
 --- PhpStorm-133.982/bin/idea.properties~	2014-02-25 05:43:47.000000000 +0200
 +++ PhpStorm-133.982/bin/idea.properties	2014-03-19 23:57:13.956684223 +0200
 @@ -6,21 +6,25 @@
