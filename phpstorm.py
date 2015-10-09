@@ -94,6 +94,4 @@ if sys.platform == "darwin":
     os.execvp("open", ["-a", RUN_PATH] + args)
 else:
     # unix common
-    bin_dir, bin_file = os.path.split(RUN_PATH)
-    os.chdir(bin_dir)
-    os.execv(bin_file, [bin_file] + args)
+    os.execv(RUN_PATH, [RUN_PATH] + args)
