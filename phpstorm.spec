@@ -1,13 +1,13 @@
 %include	/usr/lib/rpm/macros.java
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
-Version:	9.0.2
+Version:	10.0
 Release:	1
 # TODO: figure out what's the licensing and redistribution
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
-# NoSource0-md5:	4c3046d4b5ca10b1f51795cc42eaae4c
+# NoSource0-md5:	43b45cce9d88f49f780e5e292ade0dfd
 NoSource:	0
 Source1:	%{name}.desktop
 Source2:	%{name}.py
@@ -17,7 +17,7 @@ BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
-Requires:	jre >= 1.6
+Requires:	jre >= 1.7
 Requires:	which
 Suggests:	cvs
 Suggests:	git-core
@@ -46,7 +46,7 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-141.2462
+%setup -qn PhpStorm-143.381.48
 
 # keep only single arch files (don't want to pull 32bit deps by default),
 # if you want to mix, install rpm from both arch
@@ -63,8 +63,9 @@ rm bin/phpstorm.vmoptions
 rm -r lib/libpty/linux/x86
 %endif
 rm -r lib/libpty/{macosx,win}
+rm bin/fsnotifier-arm
 %patch0 -p1
-chmod a+rx bin/*.so bin/fsnotifier*
+chmod a+rx bin/*.so bin/fsnotifier* lib/libpty/linux/*/libpty.so
 mv bin/webide.png .
 
 # cleanup backups after patching
@@ -74,7 +75,7 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdir},%{_bindir},%{_pixmapsdir},%{_desktopdir}}
 cp -l build.txt $RPM_BUILD_ROOT/cp-test && l=l && rm -f $RPM_BUILD_ROOT/cp-test
-cp -a$l bin help lib license plugins $RPM_BUILD_ROOT%{_appdir}
+cp -a$l bin help lib plugins $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_pixmapsdir}/%{name}.png $RPM_BUILD_ROOT%{_appdir}/bin
 cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
@@ -90,7 +91,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pstorm
 %dir %{_appdir}
 %{_appdir}/help
-%{_appdir}/license
 %{_appdir}/plugins
 %dir %{_appdir}/bin
 %{_appdir}/bin/%{name}*.vmoptions
