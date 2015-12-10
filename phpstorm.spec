@@ -1,13 +1,13 @@
 %include	/usr/lib/rpm/macros.java
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
-Version:	10.0.1
+Version:	10.0.2
 Release:	1
 # TODO: figure out what's the licensing and redistribution
 License:	?
 Group:		Development/Tools
 Source0:	http://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
-# NoSource0-md5:	56617d993bb379112de51decc62c35ad
+# NoSource0-md5:	e4d1e3730dc7820263ca879d9ac47a72
 NoSource:	0
 Source1:	%{name}.desktop
 Source2:	%{name}.py
@@ -17,7 +17,7 @@ BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
-Requires:	jre >= 1.7
+Requires:	jre-X11 >= 1.7
 Requires:	which
 Suggests:	cvs
 Suggests:	git-core
@@ -46,7 +46,7 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-143.382.38
+%setup -qn PhpStorm-143.1184.87
 
 # keep only single arch files (don't want to pull 32bit deps by default),
 # if you want to mix, install rpm from both arch
