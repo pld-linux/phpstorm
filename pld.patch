@@ -1,25 +1,23 @@
---- PhpStorm-145.258.2/bin/phpstorm.sh~	2016-03-16 17:03:50.000000000 +0200
+--- PhpStorm-145.258.2/bin/phpstorm.sh	2016-03-21 11:05:59.385371297 +0200
 +++ PhpStorm-145.258.2/bin/phpstorm.sh	2016-03-21 11:05:59.385371297 +0200
-@@ -178,6 +178,11 @@
+@@ -178,6 +178,9 @@
    CLASSPATH="$CLASSPATH:$WEBIDE_CLASSPATH"
  fi
  
 +WEBIDE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/PhpStorm"
 +WEBIDE_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/PhpStorm"
 +
-+IDE_JVM_ARGS="-Dwebide.config.dir=$WEBIDE_CONFIG_DIR -Dwebide.cache.dir=$WEBIDE_CACHE_DIR"
-+
  # ---------------------------------------------------------------------
  # Run the IDE.
  # ---------------------------------------------------------------------
-@@ -193,6 +198,7 @@
-   -Djb.restart.code=88 -Didea.paths.selector=PhpStorm2016.1 \
-   $IDE_PROPERTIES_PROPERTY \
-   -Didea.platform.prefix=PhpStorm \
-+  $IDE_JVM_ARGS \
-   com.intellij.idea.Main \
-   "$@"
- EC=$?
+@@ -187,6 +190,7 @@
+   "-Xbootclasspath/a:$IDE_HOME/lib/boot.jar" \
+   -classpath "$CLASSPATH" \
+   $VM_OPTIONS \
++  -Dwebide.config.dir=$WEBIDE_CONFIG_DIR -Dwebide.cache.dir=$WEBIDE_CACHE_DIR \
+   "-Djb.vmOptionsFile=$VM_OPTIONS_FILE" \
+   "-XX:ErrorFile=$HOME/java_error_in_WEBIDE_%p.log" \
+   "-XX:HeapDumpPath=$HOME/java_error_in_WEBIDE.hprof" \
 --- PhpStorm-145.258.2/bin/idea.properties~	2016-03-16 17:02:05.000000000 +0200
 +++ PhpStorm-145.258.2/bin/idea.properties	2016-03-21 11:07:02.191952728 +0200
 @@ -6,21 +6,25 @@
