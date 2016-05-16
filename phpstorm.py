@@ -1,26 +1,31 @@
-#!/usr/bin/python
+#!/usr/bin/python2
+# -*- coding: utf-8 -*-
 
+import os
 import socket
 import struct
 import sys
-import os
 import time
 
 # see com.intellij.idea.SocketLock for the server side of this interface
 
 RUN_PATH = '/usr/lib/phpstorm/bin/phpstorm.sh'
 CONFIG_PATH = os.path.expanduser('~/.config/PhpStorm')
+SYSTEM_PATH = os.path.expanduser('~/.cache/PhpStorm')
 
 args = []
 skip_next = False
 for i, arg in enumerate(sys.argv[1:]):
     if arg == '-h' or arg == '-?' or arg == '--help':
-        print(('Usage:\n' + \
-               '  {0} -h |-? | --help\n' + \
-               '  {0} [-l|--line line] file[:line]\n' + \
-               '  {0} diff file1 file2').format(sys.argv[0]))
+        print(('Usage:\n' +
+               '  {0} -h |-? | --help\n' +
+               '  {0} [-l|--line line] file[:line]\n' +
+               '  {0} diff <left> <right>\n' +
+               '  {0} merge <local> <remote> [base] <merged>').format(sys.argv[0]))
         exit(0)
     elif arg == 'diff' and i == 0:
+        args.append(arg)
+    elif arg == 'merge' and i == 0:
         args.append(arg)
     elif arg == '-l' or arg == '--line':
         args.append(arg)
@@ -32,15 +37,16 @@ for i, arg in enumerate(sys.argv[1:]):
         if ':' in arg:
             file_path, line_number = arg.rsplit(':', 1)
             if line_number.isdigit():
-              args.append('-l')
-              args.append(line_number)
-              args.append(os.path.abspath(file_path))
+                args.append('-l')
+                args.append(line_number)
+                args.append(os.path.abspath(file_path))
             else:
-              args.append(os.path.abspath(arg))
+                args.append(os.path.abspath(arg))
         else:
             args.append(os.path.abspath(arg))
 
-def launch_with_port(port):
+
+def launch_with_port(port, token):
     found = False
 
     s = socket.socket()
@@ -54,7 +60,6 @@ def launch_with_port(port):
         try:
             path_len = struct.unpack(">h", s.recv(2))[0]
             path = s.recv(path_len)
-            path = os.path.abspath(path)
             if os.path.abspath(path) == os.path.abspath(CONFIG_PATH):
                 found = True
                 break
@@ -63,35 +68,38 @@ def launch_with_port(port):
 
     if found:
         if args:
-            cmd = "activate " + os.getcwd() + "\0" + "\0".join(args)
+            cmd = "activate " + token + '\0' + os.getcwd() + "\0" + "\0".join(args)
             encoded = struct.pack(">h", len(cmd)) + cmd
             s.send(encoded)
-            time.sleep(0.5)   # don't close socket immediately
+            time.sleep(0.5)  # don't close socket immediately
         return True
 
     return False
 
-port = -1
-try:
-    f = open(os.path.join(CONFIG_PATH, 'port'))
-    port = int(f.read())
-except Exception:
-    type, value, traceback = sys.exc_info()
-    print(value)
-    port = -1
 
-if port == -1:
-    # SocketLock actually allows up to 50 ports, but the checking takes too long
-    for port in range(6942, 6942+10):
-        if launch_with_port(port): exit()
-else:
-    if launch_with_port(port): exit()
+port_path = os.path.join(CONFIG_PATH, 'port')
+token_path = os.path.join(SYSTEM_PATH, 'token')
+if os.path.exists(port_path) and os.path.exists(token_path):
+    try:
+        f = open(port_path)
+        port = int(f.read())
+        f.close()
 
-if sys.platform == "darwin":
-    # Mac OS: RUN_PATH is *.app path
-    if len(args):
-        args.insert(0, "--args")
-    os.execvp("open", ["-a", RUN_PATH] + args)
+        f = open(token_path)
+        token = f.read()
+        f.close()
+
+        launch_with_port(port, token)
+    except:
+        type, value, traceback = sys.exc_info()
+        print('No IDE instance has been found. New one will be started.') # todo error
 else:
-    # unix common
-    os.execv(RUN_PATH, [RUN_PATH] + args)
+    print('No IDE instance has been found. New one will be started.')
+    if sys.platform == "darwin":
+        # OS X: RUN_PATH is *.app path
+        if len(args):
+            args.insert(0, "--args")
+        os.execvp("open", ["-a", RUN_PATH] + args)
+    else:
+        # Unix common
+        os.execv(RUN_PATH, [RUN_PATH] + args)

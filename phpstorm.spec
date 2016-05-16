@@ -79,8 +79,8 @@ cp -a$l bin help lib plugins $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_pixmapsdir}/%{name}.png $RPM_BUILD_ROOT%{_appdir}/bin
 cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-install -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/%{name}
-ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/pstorm
+install -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/pstorm
+ln -s pstorm $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
