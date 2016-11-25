@@ -1,13 +1,13 @@
 %include	/usr/lib/rpm/macros.java
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
-Version:	2016.2.2
+Version:	2016.3
 Release:	1
 # TODO: figure out what's the licensing and redistribution
 License:	?
 Group:		Development/Tools
 Source0:	https://download.jetbrains.com/webide/PhpStorm-%{version}.tar.gz
-# NoSource0-md5:	6305fdc932dc854d04c34f67dee59529
+# NoSource0-md5:	f80ace50c1e21e99f87b96589a7f6be9
 NoSource:	0
 Source1:	%{name}.desktop
 Source2:	%{name}.py
@@ -46,7 +46,7 @@ Note: PhpStorm includes all the functionality of WebStorm (HTML/CSS
 Editor, JavaScript Editor) and adds full-fledged support for PHP.
 
 %prep
-%setup -qn PhpStorm-162.2380.11
+%setup -qn PhpStorm-163.7743.50
 
 # keep only single arch files (don't want to pull 32bit deps by default),
 # if you want to mix, install rpm from both arch
@@ -62,11 +62,10 @@ rm bin/libyjpagent-linux.so
 rm bin/phpstorm.vmoptions
 rm -r lib/libpty/linux/x86
 %endif
-rm -r lib/libpty/{macosx,win}
 rm bin/fsnotifier-arm
 %patch0 -p1
 chmod a+rx bin/*.so bin/fsnotifier* lib/libpty/linux/*/libpty.so
-mv bin/webide.png .
+mv bin/phpstorm.png .
 
 # cleanup backups after patching
 find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
@@ -77,7 +76,7 @@ install -d $RPM_BUILD_ROOT{%{_appdir},%{_bindir},%{_pixmapsdir},%{_desktopdir}}
 cp -l build.txt $RPM_BUILD_ROOT/cp-test && l=l && rm -f $RPM_BUILD_ROOT/cp-test
 cp -a$l bin help lib plugins $RPM_BUILD_ROOT%{_appdir}
 ln -s %{_pixmapsdir}/%{name}.png $RPM_BUILD_ROOT%{_appdir}/bin
-cp -p webide.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
+cp -p phpstorm.png $RPM_BUILD_ROOT%{_pixmapsdir}/%{name}.png
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 install -p %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/pstorm
 ln -s pstorm $RPM_BUILD_ROOT%{_bindir}/%{name}
@@ -98,13 +97,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/bin/idea.properties
 %{_appdir}/bin/log.xml
 %attr(755,root,root) %{_appdir}/bin/%{name}.sh
-%attr(755,root,root) %{_appdir}/bin/inspect.sh
+%attr(755,root,root) %{_appdir}/bin/*.py
+%attr(755,root,root) %{_appdir}/bin/format.sh
 %attr(755,root,root) %{_appdir}/bin/fsnotifier*
+%attr(755,root,root) %{_appdir}/bin/inspect.sh
 %attr(755,root,root) %{_appdir}/bin/libyjpagent-linux*.so
 %dir %{_appdir}/lib
 %{_appdir}/lib/*.jar
-%dir %{_appdir}/lib/ext
-%{_appdir}/lib/ext/*.jar
 %dir %{_appdir}/lib/libpty
 %dir %{_appdir}/lib/libpty/linux
 %dir %{_appdir}/lib/libpty/linux/x86*
