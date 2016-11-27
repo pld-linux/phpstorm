@@ -1,5 +1,5 @@
---- PhpStorm-163.7743.50/bin/phpstorm.sh~	2016-11-24 19:42:09.000000000 +0200
-+++ PhpStorm-163.7743.50/bin/phpstorm.sh	2016-11-24 20:01:18.624544058 +0200
+--- PhpStorm-163.7743.50/bin/phpstorm.sh	2016-11-24 20:01:18.624544058 +0200
++++ PhpStorm-163.7743.50/bin/phpstorm.sh	2016-11-27 12:51:53.104141826 +0200
 @@ -178,6 +178,9 @@
    CLASSPATH="$CLASSPATH:$WEBIDE_CLASSPATH"
  fi
@@ -10,14 +10,15 @@
  # ---------------------------------------------------------------------
  # Run the IDE.
  # ---------------------------------------------------------------------
-@@ -198,6 +198,7 @@
-   "-XX:HeapDumpPath=$HOME/java_error_in_PHPSTORM.hprof" \
+@@ -196,6 +199,7 @@
    -Didea.paths.selector=PhpStorm2016.3 \
    "-Djb.vmOptionsFile=$VM_OPTIONS_FILE" \
 +  -Dwebide.config.dir=$WEBIDE_CONFIG_DIR -Dwebide.cache.dir=$WEBIDE_CACHE_DIR \
    ${IDE_PROPERTIES_PROPERTY} \
-   -Didea.platform.prefix=PhpStorm -Didea.jre.check=true \
+-  -Didea.platform.prefix=PhpStorm -Didea.jre.check=true \
++  -Didea.platform.prefix=PhpStorm -Didea.jre.check=false \
    com.intellij.idea.Main \
+   "$@"
 --- PhpStorm-145.258.2/bin/idea.properties~	2016-03-16 17:02:05.000000000 +0200
 +++ PhpStorm-145.258.2/bin/idea.properties	2016-03-21 11:07:02.191952728 +0200
 @@ -6,21 +6,25 @@
