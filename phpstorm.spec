@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.java
 Summary:	Lightweight and Smart PHP IDE
 Name:		phpstorm
 Version:	2017.1.4
